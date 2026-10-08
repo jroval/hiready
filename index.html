@@ -71,6 +71,12 @@ textarea{resize:vertical;min-height:70px}
 .kw span{padding:4px 10px;border-radius:999px;font-size:12.5px;font-weight:700}
 .kw .in{background:var(--ok-bg);color:var(--ok)} .kw .out{background:var(--no-bg);color:var(--no)}
 
+.pick{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:6px 0;border-bottom:1px solid var(--line)}
+.pick:last-of-type{border-bottom:0}
+.pick small{display:block;color:var(--muted);font-size:12px}
+.pick input[type=color]{width:48px;height:34px;padding:2px;border:1px solid var(--line);border-radius:8px;background:#fff;cursor:pointer}
+.sw{display:inline-flex;gap:3px;margin-right:6px;vertical-align:middle}
+.sw i{width:11px;height:11px;border-radius:50%;border:1px solid rgba(0,0,0,.15)}
 /* preview */
 .stage{position:sticky;top:64px;display:flex;flex-direction:column;gap:10px;min-width:0}
 .status{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:13px}
@@ -81,20 +87,20 @@ textarea{resize:vertical;min-height:70px}
 .bar.over i{background:var(--no)}
 .fname{color:var(--muted);font-size:12px}
 .scaler{position:relative;width:100%;overflow:hidden;border-radius:6px;box-shadow:0 8px 30px rgba(15,61,58,.18);background:#fff}
-#cv{position:absolute;left:0;top:0;width:794px;min-height:1123px;transform-origin:0 0;background:#fff;color:#0f3d3a;padding:46px 52px;font-family:var(--b);font-size:11.5px;line-height:1.42}
-#cv h1{font-family:var(--h);font-weight:700;font-size:30px;line-height:1.1;margin:0;color:var(--navy)}
-#cv .headline{font-family:var(--h);font-weight:600;font-size:14px;color:var(--orange);margin-top:5px}
-#cv .contact{margin-top:6px;color:#0f3d3a;font-size:11px}
-#cv .head{padding-bottom:12px;border-bottom:2px solid var(--navy);margin-bottom:4px}
-#cv h2{font-family:var(--h);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin:15px 0 6px;padding-bottom:3px;border-bottom:1px solid #b7791f}
+#cv{position:absolute;left:0;top:0;width:794px;min-height:1123px;transform-origin:0 0;background:#fff;color:var(--ct);padding:46px 52px;font-family:var(--b);font-size:11.5px;line-height:1.42}
+#cv h1{font-family:var(--h);font-weight:700;font-size:30px;line-height:1.1;margin:0;color:var(--cn)}
+#cv .headline{font-family:var(--h);font-weight:600;font-size:14px;color:var(--ca);margin-top:5px}
+#cv .contact{margin-top:6px;color:var(--ct);font-size:11px}
+#cv .head{padding-bottom:12px;border-bottom:2px solid var(--cn);margin-bottom:4px}
+#cv h2{font-family:var(--h);font-weight:700;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ca);margin:15px 0 6px;padding-bottom:3px;border-bottom:1px solid var(--ca)}
 #cv .entry{margin-bottom:8px;break-inside:avoid}
 #cv .eh{display:flex;justify-content:space-between;gap:12px;align-items:baseline}
-#cv .et{font-family:var(--h);font-weight:600;font-size:12px;color:var(--navy)}
-#cv .ed{color:#0f3d3a;font-size:11px;white-space:nowrap}
-#cv .eo{color:#0f3d3a;font-style:italic}
+#cv .et{font-family:var(--h);font-weight:600;font-size:12px;color:var(--cn)}
+#cv .ed{color:var(--ct);font-size:11px;white-space:nowrap}
+#cv .eo{color:var(--ct);font-style:italic}
 #cv ul{margin:3px 0 0;padding-left:16px} #cv li{margin-bottom:2px}
 #cv p{margin:0}
-#cv .empty{color:#0f3d3a;opacity:.45;font-style:italic}
+#cv .empty{color:var(--ct);opacity:.45;font-style:italic}
 .hint{color:var(--muted);font-size:12px}
 
 @media (max-width:980px){.layout{grid-template-columns:1fr}.stage{position:static}.row,.row3{grid-template-columns:1fr}}
@@ -138,6 +144,13 @@ const VERBS=['Desarrollé','Gestioné','Diseñé','Coordiné','Analicé','Implan
 const TECH_SUGG=['HTML5 y CSS3','JavaScript','TypeScript','React','Angular','Node.js','PHP','Laravel','Java y Spring Boot','Python','SQL (MySQL, PostgreSQL)','MongoDB','API REST y JSON','Git y GitHub','Docker','Responsive / Bootstrap','Scrum'];
 const LEVELS=['A1','A2','B1','B2','C1','C2','Nativo'];
 const STOP=new Set('a al algo ante con contra cual cuando de del desde donde durante e el ella ellos en entre era es esta este esto estos fue ha hay la las le les lo los mas más me mi mis muy no nos o para pero por que se sea ser si sin sobre son su sus también tu tus un una uno unos y ya the and for with you your our are will from that this have has not but can all las nuestro nuestra equipo empresa buscamos ofrecemos incorporamos puesto trabajo experiencia años año persona valorable valorará requisitos funciones oferta jornada salario contrato candidato candidata'.split(' '));
+const PRESETS={
+  hiready:{n:'Hiready',c:{text:'#0f3d3a',name:'#0f3d3a',accent:'#b7791f'}},
+  negro:{n:'Todo negro',c:{text:'#000000',name:'#000000',accent:'#000000'}},
+  clasico:{n:'Azul clásico',c:{text:'#1a1a1a',name:'#1f3a6e',accent:'#1f3a6e'}},
+  burdeos:{n:'Burdeos',c:{text:'#222222',name:'#6b1d2a',accent:'#9a3b4b'}},
+  grafito:{n:'Grafito y naranja',c:{text:'#222222',name:'#222222',accent:'#d2551f'}}
+};
 const KEY='cv-creator-v1';
 
 const blank=()=>({
@@ -148,7 +161,7 @@ const blank=()=>({
   tech:[],techFree:'',
   lang:[{name:'',level:'B2',cert:''}],
   soft:[{skill:'',proof:''}],
-  other:'',offer:'',manual:{}
+  other:'',offer:'',manual:{},colors:{...PRESETS.hiready.c}
 });
 const example=()=>({
   name:'Sergio López Navarro',headline:'Desarrollador/a web full stack · Técnico/a Superior en DAW',
@@ -162,11 +175,11 @@ const example=()=>({
   tech:['HTML5 y CSS3','JavaScript','PHP','Node.js','SQL (MySQL, PostgreSQL)','API REST y JSON','Git y GitHub','Responsive / Bootstrap','Scrum'],techFree:'',
   lang:[{name:'Español',level:'Nativo',cert:''},{name:'Inglés',level:'B2',cert:'Cambridge First'}],
   soft:[{skill:'Trabajo en equipo',proof:'coordiné un proyecto de 4 personas entregado en plazo'}],
-  other:'Carné de conducir B · Voluntariado en banco de alimentos',offer:'',manual:{}
+  other:'Carné de conducir B · Voluntariado en banco de alimentos',offer:'',manual:{},colors:{...PRESETS.hiready.c}
 });
 
 let S=load();
-function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.name!==undefined)return Object.assign(blank(),s)}catch(e){}return blank()}
+function load(){try{const s=JSON.parse(localStorage.getItem(KEY));if(s&&s.name!==undefined){const o=Object.assign(blank(),s);o.colors=Object.assign({},PRESETS.hiready.c,s.colors);return o}}catch(e){}return blank()}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}}
 const $=(s,r=document)=>r.querySelector(s);
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -214,6 +227,7 @@ const SECTIONS=[
  {id:'tech',n:5,t:'Competencias técnicas',m:'herramientas concretas'},
  {id:'lang',n:6,t:'Idiomas',m:'nivel MCER'},
  {id:'soft',n:7,t:'Competencias transversales',m:'con prueba'},
+ {id:'style',n:'🎨',t:'Colores del CV',m:'texto, nombre y títulos'},
  {id:'other',n:'+',t:'Otros datos',m:'solo si aportan'},
  {id:'ats',n:'★',t:'Adapta a la oferta (ATS)',m:'palabras clave'},
  {id:'check',n:'✓',t:'Checklist antes de enviar',m:''}
@@ -284,6 +298,13 @@ function sectionHTML(id){
       ${inp('Prueba (qué hiciste)','soft.'+i+'.proof',e.proof,'coordiné un proyecto de 4 personas entregado en plazo')}</div>`).join('')}
     <button class="add" data-act="add" data-l="soft">+ Añadir competencia</button>
     <div id="softfb" class="fb"></div>`;
+  case 'style':return `
+    <div class="tip">Elige los colores para cada empresa. Para un CV sobrio, usa «Todo negro»; también puedes cambiar cada color por separado.</div>
+    <div class="chips">${Object.entries(PRESETS).map(([k,v])=>`<button class="chip" data-act="preset" data-k="${k}"><span class="sw">${[v.c.text,v.c.name,v.c.accent].map(c=>`<i style="background:${c}"></i>`).join('')}</span>${v.n}</button>`).join('')}</div>
+    <div class="pick"><div>Texto general<small>párrafos, logros, fechas y contacto</small></div><input type="color" data-p="colors.text" value="${S.colors.text}"></div>
+    <div class="pick"><div>Nombre y puestos<small>tu nombre, títulos de cada entrada y línea bajo la cabecera</small></div><input type="color" data-p="colors.name" value="${S.colors.name}"></div>
+    <div class="pick"><div>Titular y secciones<small>titular profesional y títulos de sección</small></div><input type="color" data-p="colors.accent" value="${S.colors.accent}"></div>
+    <div class="hint">Consejo: usa colores oscuros sobre fondo blanco; un texto claro puede no leerse al imprimir.</div>`;
   case 'other':return `
     <div class="tip">Cursos relevantes, carné de conducir, voluntariado. Solo si aportan algo a la oferta.</div>
     <div><label>Otros datos (uno por línea)</label><textarea data-p="other" rows="3">${esc(S.other)}</textarea></div>`;
@@ -366,7 +387,7 @@ function renderChecklist(){
   if(el)el.innerHTML=c.map(x=>`<div class="check ${x.auto?'auto':'manual'} ${x.ok?'ok':''}" ${x.auto?'':`data-act="manual" data-k="${x.k}"`}>
     <span class="box">${x.ok?'✓':''}</span><span>${x.t}${x.hint?`<small>${typeof x.hint==='function'?x.hint():x.hint}</small>`:''}</span></div>`).join('')+
     `<p class="hint">${c.filter(x=>x.ok).length}/${c.length} cumplidos.</p>`;
-  const done={head:!!S.name&&!!S.headline&&!!S.email,profile:!!S.profile,edu:S.edu.some(e=>e.title),exp:S.exp.some(e=>e.bullets.trim()),tech:techList().length>=5,lang:S.lang.some(l=>l.name),soft:S.soft.some(s=>s.skill&&s.proof),other:!!S.other.trim(),ats:!!S.offer.trim(),check:c.every(x=>x.ok)};
+  const done={head:!!S.name&&!!S.headline&&!!S.email,profile:!!S.profile,edu:S.edu.some(e=>e.title),exp:S.exp.some(e=>e.bullets.trim()),tech:techList().length>=5,lang:S.lang.some(l=>l.name),soft:S.soft.some(s=>s.skill&&s.proof),other:!!S.other.trim(),style:true,ats:!!S.offer.trim(),check:c.every(x=>x.ok)};
   document.querySelectorAll('details.sec').forEach(d=>{
     let dot=d.querySelector('.dot');
     if(!dot){dot=document.createElement('span');dot.className='dot';d.querySelector('summary').appendChild(dot)}
@@ -382,6 +403,7 @@ function pdfName(){
   return nm+'_CV'+(S.suffix.trim()?'_'+clean(S.suffix.trim()):'');
 }
 function renderCV(){
+  const cs=$('#cv').style;cs.setProperty('--ct',S.colors.text);cs.setProperty('--cn',S.colors.name);cs.setProperty('--ca',S.colors.accent);
   const emp=t=>`<span class="empty">${t}</span>`;
   const contact=[S.phone,S.email,S.city,...lines(S.links)].filter(Boolean).map(esc).join(' · ');
   const sec=(t,b)=>b?`<h2>${t}</h2>${b}`:'';
@@ -460,6 +482,8 @@ document.addEventListener('click',e=>{
     const f=S.pf;const dot=s=>s.trim().replace(/[.\s]+$/,'');
     S.profile=`Técnico/a Superior en ${f.ciclo||'[ciclo]'} con formación en ${f.comp||'[2–3 competencias]'}. ${f.logro?dot(f.logro)+'.':'[Un proyecto o logro].'} Busco ${f.obj||'[objetivo]'} en ${f.emp||'[tipo de empresa]'}.`;
     $('#b-profile textarea[data-p=profile]').value=S.profile;refreshAll();
+  }else if(a==='preset'){
+    S.colors={...PRESETS[b.dataset.k].c};buildPanel();
   }else if(a==='manual'){
     S.manual[b.dataset.k]=!S.manual[b.dataset.k];refreshAll();
   }
